@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function Admin() {
+
+    let { id } = useParams();
 
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [posts, setPosts] = useState([]);
+    // const [posts, setPosts] = useState([]);
+
+    const [status, setStatus] = useState(null);
+    const [initialLoadError, setInitialLoadError] = useState(null);
+
+    const [posts, setPosts] = useState({ name: undefined, school_code: undefined, address: undefined });
+    const hs = { Accept: "application/json", "Content-Type": "application/json" };
+    const url = `http://localhost:8000/api/post`;
 
 
     //loading data from API
@@ -48,6 +57,44 @@ function Admin() {
             }
         );
     };
+
+    //create funkcija
+    const createItem = (e) => {
+        e.preventDefault();
+        fetch(url, { method: "POST", headers: hs, body: JSON.stringify(posts) }).then(
+            (res) => {
+                if (res.status === 200 || res.status === 201) {
+                    setStatus({ message: res.statusText });
+                } else if (res.status === 401) {
+                    setStatus({ message: res.statusText });
+                } else if (res.status === 422) {
+                    setStatus({ message: res.statusText });
+                }
+            },
+            (err) => {
+                setStatus(err);
+            }
+        );
+    };
+    // Update edit funkcija
+    const updateItem = (e) => {
+        e.preventDefault();
+        fetch(`${url}/${id}`, { method: "PUT", headers: hs, body: JSON.stringify(posts) }).then(
+            (res) => {
+                if (res.status === 200) {
+                    setStatus({ message: res.statusText });
+                } else if (res.status === 401) {
+                    setStatus({ message: res.statusText });
+                } else if (res.status === 422) {
+                    setStatus({ message: res.statusText });
+                }
+            },
+            (err) => {
+                setStatus(err);
+            }
+        );
+    };
+
 
 
     if (!isLoaded) {
@@ -106,7 +153,17 @@ function Admin() {
                 </tbody>
             </table>
         );
+
+
+
+
     }
-}
+
+
+    //atvaizdavimo formos logika
+
+
+};
+
 
 export default Admin;
