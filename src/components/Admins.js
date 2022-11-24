@@ -10,7 +10,7 @@ const Admins = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [post, setPost] = useState({ name: undefined, school_code: undefined, address: undefined });
     const hs = { Accept: "application/json", "Content-Type": "application/json" };
-    const url = `http://localhost:8000/api/post`;
+    const url = `http://localhost:8000/api/posts`;
 
     useEffect(() => {
         if (id)
@@ -75,7 +75,7 @@ const Admins = () => {
         return (
             <div className="d-flex aligns-items-center justify-content-center">
                 <div className="card w-50">
-                    <div className='card-header'>Hotel {id ? `nr:${id} edit` : `creation`} page</div>
+                    <div className='card-header'>Admin {id ? `nr:${id} edit` : `creation`} page</div>
                     <div className="card-body">
                         <form onSubmit={(e) => (id ? updateItem(e) : createItem(e))}>
                             <div className="my-2 text-danger">{status === null ? "" : status.message}</div>
@@ -84,32 +84,21 @@ const Admins = () => {
                                     className="form-control"
                                     onChange={(e) => setPost({ ...post, name: e.target.value })}
                                     onFocus={() => post.name ?? setPost({ ...post, name: "" })}
-                                    value={post.name ?? "Hotel name"}
+                                    value={post.name ?? "Scholl name"}
                                 />
                                 <textarea
                                     className="form-control"
-                                    onChange={(e) => setPost({ ...post, country: e.target.value })}
-                                    onFocus={() => post.country ?? setPost({ ...post, country: "" })}
-                                    value={post.country ?? "Change country name"}
+                                    onChange={(e) => setPost({ ...post, school_code: e.target.value })}
+                                    onFocus={() => post.school_code ?? setPost({ ...post, school_code: "" })}
+                                    value={post.school_code ?? "Scholl code"}
                                 />
                                 <textarea
                                     className="form-control"
-                                    onChange={(e) => setPost({ ...post, price: e.target.value })}
-                                    onFocus={() => post.price ?? setPost({ ...post, price: "" })}
-                                    value={post.price ?? "Set new price"}
+                                    onChange={(e) => setPost({ ...post, address: e.target.value })}
+                                    onFocus={() => post.address ?? setPost({ ...post, address: "" })}
+                                    value={post.address ?? "Adrress of the school"}
                                 />
-                                <textarea
-                                    className="form-control"
-                                    onChange={(e) => setPost({ ...post, picture: e.target.value })}
-                                    onFocus={() => post.picture ?? setPost({ ...post, picture: "" })}
-                                    value={post.picture ?? "Set new picture"}
-                                />
-                                <textarea
-                                    className="form-control"
-                                    onChange={(e) => setPost({ ...post, nights: e.target.value })}
-                                    onFocus={() => post.nights ?? setPost({ ...post, nights: "" })}
-                                    value={post.nights ?? "Add nights"}
-                                />
+
                                 <input className="btn btn-primary" type="submit" value="Submit" />
                             </div>
                         </form>

@@ -8,14 +8,14 @@ function Admin() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    // const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([]);
 
     const [status, setStatus] = useState(null);
     const [initialLoadError, setInitialLoadError] = useState(null);
 
-    const [posts, setPosts] = useState({ name: undefined, school_code: undefined, address: undefined });
+    // const [posts, setPosts] = useState({ name: undefined, school_code: undefined, address: undefined });
     const hs = { Accept: "application/json", "Content-Type": "application/json" };
-    const url = `http://localhost:8000/api/post`;
+
 
 
     //loading data from API
@@ -58,42 +58,7 @@ function Admin() {
         );
     };
 
-    //create funkcija
-    const createItem = (e) => {
-        e.preventDefault();
-        fetch(url, { method: "POST", headers: hs, body: JSON.stringify(posts) }).then(
-            (res) => {
-                if (res.status === 200 || res.status === 201) {
-                    setStatus({ message: res.statusText });
-                } else if (res.status === 401) {
-                    setStatus({ message: res.statusText });
-                } else if (res.status === 422) {
-                    setStatus({ message: res.statusText });
-                }
-            },
-            (err) => {
-                setStatus(err);
-            }
-        );
-    };
-    // Update edit funkcija
-    const updateItem = (e) => {
-        e.preventDefault();
-        fetch(`${url}/${id}`, { method: "PUT", headers: hs, body: JSON.stringify(posts) }).then(
-            (res) => {
-                if (res.status === 200) {
-                    setStatus({ message: res.statusText });
-                } else if (res.status === 401) {
-                    setStatus({ message: res.statusText });
-                } else if (res.status === 422) {
-                    setStatus({ message: res.statusText });
-                }
-            },
-            (err) => {
-                setStatus(err);
-            }
-        );
-    };
+
 
 
 
@@ -123,7 +88,7 @@ function Admin() {
 
                             <td className="col-lg-2" style={{ minWidth: "200px" }}>
                                 <button
-                                    onClick={(e) => navigate(`/posts/${post.id}`)}
+                                    onClick={(e) => navigate(`/admins/${post.id}`)}
                                     className="float-end btn btn-warning mx-1"
                                 >
                                     Edit
@@ -143,7 +108,7 @@ function Admin() {
                     <tr>
                         <td colSpan="3" className="border border-3 border-start-0 border-bottom-0 border-end-0">
                             <button
-                                onClick={(e) => navigate(`/posts/create`)}
+                                onClick={(e) => navigate(`/admins/create`)}
                                 className="btn btn btn-success float-end mx-1"
                             >
                                 Add scholl
