@@ -8,6 +8,8 @@ function Admin() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [posts, setPosts] = useState([]);
 
+
+    //loading data from API
     useEffect(() => {
         fetch("http://localhost:8000/api/posts")
             .then((res) => res.json())
@@ -22,6 +24,31 @@ function Admin() {
                 }
             );
     }, []);
+
+    //delete
+    const deletePost = (id, e) => {
+        fetch("http://localhost:8000/api/posts/" + id, {
+            method: "DELETE",
+            headers: {
+                Accept: "application/json",
+            },
+        }).then(
+            (res) => {
+                if (res.status === 200) {
+                    const remaining = posts.filter((p) => id !== p.id);
+                    setPosts(remaining);
+                } else if (res.status === 401) {
+                    setError({ message: res.statusText });
+                }
+            },
+            (err) => {
+                console.log(err);
+                setError(err);
+                setIsLoaded(true);
+            }
+        );
+    };
+
 
     if (!isLoaded) {
         return <div>Loading...</div>;
@@ -55,7 +82,7 @@ function Admin() {
                                     Edit
                                 </button>
                                 <button
-                                    // onClick={(e) => deletePost(post.id, e)}
+                                    onClick={(e) => deletePost(post.id, e)}
                                     className="float-end btn btn-danger mx-1"
                                 >
                                     Delete
@@ -64,15 +91,15 @@ function Admin() {
                         </tr>
                     ))}
                     <tr>
-                        <td colspan="3"></td>
+                        <td colSpan="3"></td>
                     </tr>
                     <tr>
-                        <td colspan="3" className="border border-3 border-start-0 border-bottom-0 border-end-0">
+                        <td colSpan="3" className="border border-3 border-start-0 border-bottom-0 border-end-0">
                             <button
                                 onClick={(e) => navigate(`/posts/create`)}
                                 className="btn btn btn-success float-end mx-1"
                             >
-                                Add new post
+                                Add scholl
                             </button>
                         </td>
                     </tr>

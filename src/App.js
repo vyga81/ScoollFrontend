@@ -13,9 +13,9 @@ function App() {
       <div className="container py-3">
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/posts" element={<Admin />} />
-          <Route path="/posts/:id" element={<Admin />} />
-          <Route path="/posts/create" element={<Admin />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/:id" element={<Admin />} />
+          <Route path="/admin/create" element={<Admin />} />
         </Routes>
       </div>
       <Footer />
