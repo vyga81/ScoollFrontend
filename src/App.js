@@ -1,4 +1,5 @@
 // import logo from './logo.svg';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Admin from './components/Admin';
 import Header from './components/Header';
@@ -10,7 +11,7 @@ function App() {
       <Header />
       <div className="container py-3">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/posts" element={<Admin />} />
           <Route path="/posts/:id" element={<Admin />} />
           <Route path="/posts/create" element={<Admin />} />
